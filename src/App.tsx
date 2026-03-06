@@ -45,7 +45,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="border-b border-brand-line p-6 flex items-center justify-between bg-brand-bg sticky top-0 z-10">
+      <header className="border-b border-brand-line p-4 md:p-6 flex items-center justify-between bg-brand-bg sticky top-0 z-10">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-brand-ink text-brand-bg rounded-lg">
             <Code2 size={24} />
@@ -78,7 +78,7 @@ export default function App() {
       <main className="flex-1 flex flex-col lg:flex-row">
         {/* Input Section */}
         <section className={cn(
-          "flex-1 p-6 flex flex-col gap-4 border-brand-line",
+          "flex-1 p-4 md:p-6 flex flex-col gap-4 border-brand-line",
           explanation ? "lg:border-r" : ""
         )}>
           <div className="flex items-center justify-between">
@@ -151,7 +151,7 @@ export default function App() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
-              className="flex-1 p-6 bg-white/30 overflow-y-auto max-h-[calc(100vh-100px)]"
+              className="flex-1 p-4 md:p-6 bg-white/30 overflow-y-auto lg:max-h-[calc(100vh-100px)]"
             >
               <div className="flex items-center gap-2 text-xs font-mono opacity-50 uppercase tracking-wider mb-6">
                 <BookOpen size={14} />
