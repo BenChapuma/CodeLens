@@ -1,6 +1,12 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+function getAI() {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is missing. Please set it in your environment variables.");
+  }
+  return new GoogleGenAI({ apiKey });
+}
 
 export interface CodeExplanation {
   lineByLine: {
@@ -11,6 +17,7 @@ export interface CodeExplanation {
 }
 
 export async function explainCode(code: string, language?: string): Promise<CodeExplanation> {
+  const ai = getAI();
   const response = await ai.models.generateContent({
     model: "gemini-3-flash-preview",
     contents: `Explain the following code snippet in plain English. Provide a line-by-line breakdown and a short summary.

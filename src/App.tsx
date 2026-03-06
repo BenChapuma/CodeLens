@@ -16,8 +16,14 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const hasApiKey = !!process.env.GEMINI_API_KEY;
+
   const handleExplain = async () => {
     if (!code.trim()) return;
+    if (!hasApiKey) {
+      setError('GEMINI_API_KEY is missing. Please add it to your environment variables in Vercel.');
+      return;
+    }
     setIsLoading(true);
     setError(null);
     try {
@@ -50,15 +56,23 @@ export default function App() {
           </div>
         </div>
         
-        {explanation && (
-          <button 
-            onClick={reset}
-            className="flex items-center gap-2 px-4 py-2 border border-brand-line hover:bg-brand-ink hover:text-brand-bg transition-colors font-mono text-xs uppercase"
-          >
-            <RefreshCw size={14} />
-            Reset
-          </button>
-        )}
+        <div className="flex items-center gap-4">
+          {!hasApiKey && (
+            <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-amber-50 border border-amber-200 text-amber-700 text-[10px] font-mono uppercase rounded-full">
+              <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" />
+              API Key Missing
+            </div>
+          )}
+          {explanation && (
+            <button 
+              onClick={reset}
+              className="flex items-center gap-2 px-4 py-2 border border-brand-line hover:bg-brand-ink hover:text-brand-bg transition-colors font-mono text-xs uppercase"
+            >
+              <RefreshCw size={14} />
+              Reset
+            </button>
+          )}
+        </div>
       </header>
 
       <main className="flex-1 flex flex-col lg:flex-row">
@@ -115,6 +129,17 @@ export default function App() {
           {error && (
             <div className="p-4 bg-red-50 border border-red-200 text-red-600 text-sm font-mono rounded-lg">
               {error}
+              {!hasApiKey && (
+                <div className="mt-4 p-4 bg-white/50 border border-red-100 rounded-lg text-xs text-red-500">
+                  <p className="font-bold mb-1 uppercase tracking-wider">How to fix this on Vercel:</p>
+                  <ol className="list-decimal list-inside space-y-1 opacity-80">
+                    <li>Go to your project dashboard on Vercel</li>
+                    <li>Settings &gt; Environment Variables</li>
+                    <li>Add <strong>GEMINI_API_KEY</strong> with your key</li>
+                    <li>Redeploy your application</li>
+                  </ol>
+                </div>
+              )}
             </div>
           )}
         </section>
