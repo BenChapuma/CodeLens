@@ -1,0 +1,5 @@
+{
+  "name": "CodeLens: Plain-English Code Explainer",
+  "description": "Paste any code snippet and get a line-by-line plain-English breakdown using Gemini AI.",
+  "requestFramePermissions": []
+}
